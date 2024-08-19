@@ -22,7 +22,7 @@ our $metadata = {
     minimum_version => '23.11',
     maximum_version => '',
     version         => $VERSION,
-    description     => "Positaa ylimääräisiä välilyöntejä",
+    description     => "Poistaa ylimääräisiä välilyöntejä asiakkaan muokkausnäytön kentistä, niteen muokkausnäytön kentistä, kausijulkaisun vastaanottonäytön kentistä ja uuden tilauksen niteen muokkausnäytön kentistä",
 };
 
 ## This is the minimum code required for a plugin's 'new' method
