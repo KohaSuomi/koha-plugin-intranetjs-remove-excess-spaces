@@ -70,5 +70,25 @@
        $(this).val(tmp);
     });
   });
+
+/* Poista kausijulkaisun vastaanottonäytön lisänumero-kentästä ja muodostuvasta niteen sarjanumerokentästä välilyönnit alusta, lopusta ja useammat peräkkäiset välilyönnit välistä*/ 
+$(document).ready(function () {
+  if (window.location.href.indexOf("serials/serials-edit.pl") > -1) {
+
+    $('#serialseqNEW').focusout(function () {
+      var tmp = $(this).val();
+
+      tmp = tmp.replace(/ /g, '');
+      tmp = tmp.replace(/^ +/, '');
+      tmp = tmp.replace(/ +$/, '');
+      tmp = tmp.replace(/  */g, ' ');
+      tmp = tmp.replace(/(^[1-2][0-9]{3}) *: */, '$1 : ');
+
+      $(this).val(tmp);
+      $('[id*="tag_952_subfield_h_"]').val(tmp);
+    });
+
+  }
+});
   
   /// LOPPU ///
