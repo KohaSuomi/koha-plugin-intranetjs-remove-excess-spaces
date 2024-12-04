@@ -78,7 +78,6 @@ $(document).ready(function () {
     $('#serialseqNEW').focusout(function () {
       var tmp = $(this).val();
 
-      tmp = tmp.replace(/ /g, '');
       tmp = tmp.replace(/^ +/, '');
       tmp = tmp.replace(/ +$/, '');
       tmp = tmp.replace(/  */g, ' ');
