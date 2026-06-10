@@ -9,6 +9,7 @@ use base qw(Koha::Plugins::Base);
 use C4::Context;
 use utf8;
 use File::Slurp;
+use C4::Languages;
 
 ## Here we set our plugin version
 our $VERSION = "1.0.0";
@@ -25,6 +26,25 @@ our $metadata = {
     description     => "Poistaa ylimääräisiä välilyöntejä asiakkaan muokkausnäytön kentistä, niteen muokkausnäytön kentistä, kausijulkaisun vastaanottonäytön kentistä ja uuden tilauksen niteen muokkausnäytön kentistä. (Paikalliskannat, Täti)",
 };
 
+sub get_localized_metadata {
+    my ($self) = @_;
+    my $lang = C4::Languages::getlanguage() || 'en';
+    my ($name, $description);
+
+    if ($lang eq 'sv-SE') {
+        $name = "IntranetUserJS: Ta bort överflödiga mellanslag";
+        $description = "Tar bort överflödiga mellanslag från kundredigeringsskärmen, exemplarredigeringsskärmen, nummermottagningsskärmen och nya beställningsexemplarredigeringsskärmen. (Lokala databaser, Täti)";
+    
+    } elsif ($lang eq 'fi-FI' ) {
+        $name = "IntranetUserJS: Poista ylimääräiset välilyönnit";
+        $description = "Poistaa ylimääräisiä välilyöntejä asiakkaan muokkausnäytön kentistä, niteen muokkausnäytön kentistä, kausijulkaisun vastaanottonäytön kentistä ja uuden tilauksen niteen muokkausnäytön kentistä. (Paikalliskannat, Täti)";
+    } else {
+        $name = "IntranetUserJS: Remove excess spaces";
+        $description = "Removes excess spaces from the customer edit screen, item edit screen, periodical receipt screen, and new order item edit screen. (Local databases, Täti)";
+    }
+    return ($name, $description);
+}
+
 ## This is the minimum code required for a plugin's 'new' method
 ## More can be added, but none should be removed
 sub new {
@@ -38,6 +58,10 @@ sub new {
     ## This runs some additional magic and checking
     ## and returns our actual 
     my $self = $class->SUPER::new($args);
+
+    my ($name, $description) = $self->get_localized_metadata();
+    $self->{'metadata'}->{'name'} = $name;
+    $self->{'metadata'}->{'description'} = $description;
 
     return $self;
 }
